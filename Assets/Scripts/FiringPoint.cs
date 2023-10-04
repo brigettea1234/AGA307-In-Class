@@ -19,7 +19,7 @@ public class FiringPoint : MonoBehaviour
             FireRigidBody();
         
                    
-        if(Input.GetButtonDown("Fire2"))
+        if (Input.GetButtonDown("Fire2"))
             FireRaycast();
     }
 
