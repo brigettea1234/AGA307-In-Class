@@ -27,7 +27,7 @@ public class EnemyManager : MonoBehaviour
    
     public void Update()
     {
-        //Memories this
+        
         if (Input.GetKeyDown(KeyCode.I))
             SpawnAtRandom();
 
