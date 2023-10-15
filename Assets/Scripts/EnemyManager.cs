@@ -117,7 +117,7 @@ public class EnemyManager : MonoBehaviour
     /// <param name="_condition">The condition of the enemy we want to kill</param>
     void KillSpecificEnemies(string _condition)
     {
-        //Loop through all the enemies we have and kill the enmey with the ocnition, Two, in its name
+        //Loop through all the enemies we have and kill the enmey with the kill condition Two in its name
         for (int i = 0; i <= enemies.Count; i++)
         {
             if (enemies[i].name.Contains(_condition))
