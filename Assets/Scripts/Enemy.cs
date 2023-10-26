@@ -1,10 +1,13 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class Enemy : GameBehaviour
 {
-    
+    public static event Action<GameObject> OnEnemyHit = null;
+    public static event Action<GameObject> OnEnemyDie = null;
+
     public PatrolType myPatrol;
     float baseSpeed = 1f;
     public float mySpeed = 1f;
@@ -13,11 +16,11 @@ public class Enemy : MonoBehaviour
 
     int baseHealth = 100;
     public int health;
+    public int myScore;
 
     [Header ("AI")]
     public EnemyType myType;
     public Transform moveToPos; //Needed for all patrols
-    public EnemyManager _EM;    //Referencing the Enemy Manager script
     Transform startPos;         //Needed for loop patrol movement
     Transform endPos;           //Needed for loop patrol movement
     bool reverse;               //Needed for loop patrol movement
@@ -26,24 +29,26 @@ public class Enemy : MonoBehaviour
 
     void Start()
     {
-        _EM = FindObjectOfType<EnemyManager>();
-
+                        
         switch (myType)
         {
             case EnemyType.OneHand:
                 health = baseHealth;
                 mySpeed = baseSpeed;
                 myPatrol = PatrolType.Linear;
+                myScore = 100;
                 break;
             case EnemyType.TwoHand:
                 health = baseHealth * 2;
                 mySpeed = baseSpeed * 2;
                 myPatrol = PatrolType.Random;
+                myScore = 200;
                 break;
             case EnemyType.Archer:
                 health = baseHealth / 2;
                 mySpeed = baseSpeed / 2;
                 myPatrol = PatrolType.Loop;
+                myScore = 300;
                 break;
         }
 
@@ -64,6 +69,8 @@ public class Enemy : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Escape))
             StopAllCoroutines();
+        if (Input.GetKeyDown(KeyCode.H))
+            Hit(30);
     }
     
     IEnumerator Move()
@@ -96,6 +103,47 @@ public class Enemy : MonoBehaviour
         yield return new WaitForSeconds(1);
                 
         StartCoroutine(Move());
+    }
+
+    public void Hit(int _damage)
+    {
+        //Damage because different enemeies have different healths
+        health -= _damage;
+        ScaleObject(this.gameObject, transform.localScale * 1.5f);
+        if (health <= 0)
+        {
+            Die();
+        }
+        else
+        {
+            OnEnemyHit?.Invoke(this.gameObject);
+            //_GM.AddScore(myScore);
+
+        }
+        
+    }
+
+    public void Die()
+    {
+        StopAllCoroutines();
+        //Because the event has a game object, we put the game object here
+        OnEnemyDie?.Invoke(this.gameObject);
+        //_GM.AddScore(myScore * 2);
+        //If the coroutines running when the object gets destroyed, it still runs in the background
+        
+        //Removes the enemeny from our EnemyManager
+        _EM.KillEnemy(this.gameObject);
+        Destroy(this.gameObject);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider.CompareTag("Projectile"))
+        {
+            Hit(collision.gameObject.GetComponent<Projectile>().damage);
+            Destroy(collision.gameObject);
+        }
+            
     }
 
     /*IEnumerator Move()
