@@ -15,10 +15,14 @@ public class Enemy : GameBehaviour
     float moveDistance = 1000;
 
     int baseHealth = 100;
+    int maxHealth;
     public int health;
     public int myScore;
+    EnemyHealthBar healthBar;
 
-    [Header ("AI")]
+    public string myName;
+
+    [Header("AI")]
     public EnemyType myType;
     public Transform moveToPos; //Needed for all patrols
     Transform startPos;         //Needed for loop patrol movement
@@ -29,23 +33,26 @@ public class Enemy : GameBehaviour
 
     void Start()
     {
-                        
+
+        healthBar = GetComponentInChildren<EnemyHealthBar>();
+        SetName(_EM.GetEnemyName());
+
         switch (myType)
         {
             case EnemyType.OneHand:
-                health = baseHealth;
+                health = maxHealth = baseHealth;
                 mySpeed = baseSpeed;
                 myPatrol = PatrolType.Linear;
                 myScore = 100;
                 break;
             case EnemyType.TwoHand:
-                health = baseHealth * 2;
+                health = maxHealth = baseHealth * 2;
                 mySpeed = baseSpeed * 2;
                 myPatrol = PatrolType.Random;
                 myScore = 200;
                 break;
             case EnemyType.Archer:
-                health = baseHealth / 2;
+                health = maxHealth = baseHealth / 2;
                 mySpeed = baseSpeed / 2;
                 myPatrol = PatrolType.Loop;
                 myScore = 300;
@@ -57,7 +64,7 @@ public class Enemy : GameBehaviour
 
     void SetupAi()
     {
-        
+
         startPos = Instantiate(new GameObject(), transform.position, transform.rotation).transform;
         endPos = _EM.GetRandomSpawnPoint();
         moveToPos = endPos;
@@ -67,12 +74,19 @@ public class Enemy : GameBehaviour
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape))
             StopAllCoroutines();
         if (Input.GetKeyDown(KeyCode.H))
             Hit(30);
     }
+
+    public void SetName(string _name)
+    {
+        name = _name;
+        healthBar.SetName(_name);
+    }
     
+
     IEnumerator Move()
     {
         switch (myPatrol)
@@ -109,7 +123,8 @@ public class Enemy : GameBehaviour
     {
         //Damage because different enemeies have different healths
         health -= _damage;
-        ScaleObject(this.gameObject, transform.localScale * 1.5f);
+        healthBar.UpdateHealthBar(health, maxHealth);
+        ScaleObject(this.gameObject, transform.localScale * 1.1f);
         if (health <= 0)
         {
             Die();

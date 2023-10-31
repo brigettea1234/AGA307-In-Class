@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 
 public enum EnemyType
 {
@@ -50,10 +51,10 @@ public class EnemyManager : Singleton<EnemyManager>
         if (Input.GetKeyDown(KeyCode.K))
             KillAllEnemies(enemies[0]);
 
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            KillSpecificEnemies(killCondition);
-        }
+        //if (Input.GetKeyDown(KeyCode.A))
+        //{
+        //    KillSpecificEnemies(killCondition);
+        //}
     }
 
     public void SpawnEnemies()
@@ -66,8 +67,10 @@ public class EnemyManager : Singleton<EnemyManager>
             int rnd = Random.Range(0, enemyTypes.Length);
             GameObject enemy = Instantiate(enemyTypes[rnd], spawnPoints[i].position, spawnPoints[i].rotation);
             enemies.Add(enemy);
+            SetEnemyName(enemy);
+            
         }
-
+        ShowEnemyCount();
 
 
     }
@@ -83,6 +86,7 @@ public class EnemyManager : Singleton<EnemyManager>
         GameObject enemy = Instantiate(enemyTypes[rndEnemy], spawnPoints[rndSpawn].position, spawnPoints[rndSpawn].rotation);
         //Enemies is our list
         enemies.Add(enemy);
+        SetEnemyName(enemy);
         ShowEnemyCount();
 
     }
@@ -90,7 +94,7 @@ public class EnemyManager : Singleton<EnemyManager>
     /// Spawns an enemy randomly with a 2 second delay
     /// </summary>
     /// <returns></returns>
-    IEnumerator SpawnEnemyAtRandom()
+    IEnumerator SpawnEnemyAtRandom()    //Delay
     {
         //Coroutine loop
         for (int i = 0; i < enemyTypes.Length; i++)
@@ -99,8 +103,11 @@ public class EnemyManager : Singleton<EnemyManager>
             int rndSpawn = Random.Range(0, spawnPoints.Length);
             GameObject enemy = Instantiate(enemyTypes[rndEnemy], spawnPoints[rndSpawn].position, spawnPoints[rndSpawn].rotation);
             enemies.Add(enemy);
+            SetEnemyName(enemy);
+            ShowEnemyCount();
             yield return new WaitForSeconds(2);
         }
+        
     }
 
     /// <summary>
@@ -108,8 +115,23 @@ public class EnemyManager : Singleton<EnemyManager>
     /// </summary>
     void ShowEnemyCount()
     {
-        print("Number of enemies: " + enemies.Count);
+        //print("Number of enemies: " + enemies.Count);
+        _UI.UpdateEnemyCount(enemies.Count);
 
+    }
+
+    void SetEnemyName(GameObject _enemy)
+    {
+        //_enemy.GetComponent<Enemy>().SetName(enemyNames[Random.Range(0, enemyNames.Length)]);
+    }
+
+    /// <summary>
+    /// Gets an enemy name
+    /// </summary>
+    /// <returns></returns>
+    public string GetEnemyName()
+    {
+        return enemyNames[Random.Range(0, enemyNames.Length)];
     }
 
     /// <summary>
@@ -139,7 +161,8 @@ public class EnemyManager : Singleton<EnemyManager>
         {
             KillEnemy(enemies[i]);
         }
-        
+
+        ShowEnemyCount();
 
     }
 
@@ -155,6 +178,7 @@ public class EnemyManager : Singleton<EnemyManager>
             if (enemies[i].name.Contains(_condition))
                 KillEnemy(enemies[i]);
         }
+        ShowEnemyCount();
     }
 
     /// <summary>
