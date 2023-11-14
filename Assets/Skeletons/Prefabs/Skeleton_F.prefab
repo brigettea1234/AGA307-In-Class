@@ -1038,6 +1038,8 @@ GameObject:
   - component: {fileID: 414932}
   - component: {fileID: 3374886}
   - component: {fileID: 2372788}
+  - component: {fileID: 7767500452720660667}
+  - component: {fileID: 7126431960206749895}
   m_Layer: 0
   m_Name: LongSword
   m_TagString: Untagged
@@ -1110,6 +1112,33 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!136 &7767500452720660667
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 141106}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.1
+  m_Height: 1.1
+  m_Direction: 2
+  m_Center: {x: 0.000000034876273, y: 0.000000035326245, z: 0.23707041}
+--- !u!114 &7126431960206749895
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 141106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff1098078cbd4454b9838a0879235a68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 0
 --- !u!1 &145208
 GameObject:
   m_ObjectHideFlags: 0
@@ -2088,9 +2117,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 403846}
-  - component: {fileID: 9550666}
   - component: {fileID: -7140816529004940117}
   - component: {fileID: -5071339649624720320}
+  - component: {fileID: -2586142091930930989}
   m_Layer: 0
   m_Name: Skeleton_F
   m_TagString: Untagged
@@ -2118,26 +2147,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &9550666
-Animator:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 185486}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 20300ac630e0fcd4dbab63a9b39cdafa, type: 3}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 1
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 1
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &-7140816529004940117
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2154,6 +2163,8 @@ MonoBehaviour:
   mySpeed: 1
   health: 0
   myScore: 0
+  myAttackRange: 5
+  myDamage: 20
   myName: 
   myType: 0
   moveToPos: {fileID: 0}
@@ -2171,6 +2182,26 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0.6, z: 0}
+--- !u!95 &-2586142091930930989
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 185486}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 20300ac630e0fcd4dbab63a9b39cdafa, type: 3}
+  m_Controller: {fileID: 9100000, guid: 9205f6c0c1d89e7458c8ded062128696, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &185512
 GameObject:
   m_ObjectHideFlags: 0

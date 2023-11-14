@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Projectile : MonoBehaviour
+public class Projectile : GameBehaviour
 {
     public int damage = 20;
     void Start()
@@ -17,12 +17,16 @@ public class Projectile : MonoBehaviour
         //Check if we hit the object tagged Target
         if (collision.gameObject.CompareTag("Target"))
         {
+            if (collision.gameObject.GetComponent<Target>() != null)
+            {
+                collision.gameObject.GetComponent<Target>().Hit();
+            }
             //Change the colour of the target
-            collision.gameObject.GetComponent<Renderer>().material.color = Color.red;
+            //collision.gameObject.GetComponent<Renderer>().material.color = Color.red;
             //Destroy the target after 1 second
-            Destroy(collision.gameObject, 1);
+            //Destroy(collision.gameObject, 1);
             //Destroy this object
-            Destroy(this.gameObject);
+            //Destroy(this.gameObject);
         
         }
 ;

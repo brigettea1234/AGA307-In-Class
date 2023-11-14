@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FiringPoint : MonoBehaviour
+public class FiringPoint : GameBehaviour
 {
     [Header("Rigidbody Projectiles")]
     public GameObject projectileGreenOrb;

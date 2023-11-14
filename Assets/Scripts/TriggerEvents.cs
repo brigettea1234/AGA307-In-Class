@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class TriggerEvents : MonoBehaviour
+public class TriggerEvents : GameBehaviour
 {
     public UnityEvent triggerEnterEvent;
     public UnityEvent triggerStayEvent;

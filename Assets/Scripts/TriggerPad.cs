@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TriggerPad : MonoBehaviour
+public class TriggerPad : GameBehaviour
 {
     public GameObject triggeredObject;
 
