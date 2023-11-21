@@ -2437,9 +2437,10 @@ GameObject:
   - component: {fileID: -8115749404886099584}
   - component: {fileID: -7312644631441174524}
   - component: {fileID: 216264979823388467}
+  - component: {fileID: 2477976323488065345}
   m_Layer: 0
   m_Name: Skeleton_D
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2480,11 +2481,13 @@ MonoBehaviour:
   mySpeed: 1
   health: 0
   myScore: 0
-  myAttackRange: 5
   myDamage: 20
   myName: 
   myType: 0
   moveToPos: {fileID: 0}
+  attackDistance: 5
+  detectTime: 5
+  detectDistance: 10
 --- !u!136 &-7312644631441174524
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2519,6 +2522,28 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!195 &2477976323488065345
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 197444}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1001 &6026162680235317103
 PrefabInstance:
   m_ObjectHideFlags: 0
