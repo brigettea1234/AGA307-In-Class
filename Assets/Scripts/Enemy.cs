@@ -33,6 +33,8 @@ public class Enemy : GameBehaviour
     bool reverse;               //Needed for loop patrol movement
     int patrolPoint = 0;        //Needed for linear patrol movement
     Animator anim;
+    AudioSource audioSource;
+
     public float attackDistance = 5;
     public float detectTime = 5f;
     public float detectDistance = 10f;
@@ -47,6 +49,7 @@ public class Enemy : GameBehaviour
 
         anim = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
+        audioSource = GetComponent<AudioSource>();
         healthBar = GetComponentInChildren<EnemyHealthBar>();
         SetName(_EM.GetEnemyName());
 
@@ -178,18 +181,20 @@ public class Enemy : GameBehaviour
         myPatrol = PatrolType.Attack;
         ChangeSpeed(0);
         PlayAnimation("Attack");
+        _AM.PlaySound(_AM.GetEnemyAttackSound(), audioSource);
         yield return new WaitForSeconds(1);
         ChangeSpeed(mySpeed);
         myPatrol = PatrolType.Chase;
         
     }
 
-    public void Hit(int _damage)
+    private void Hit(int _damage)
     {
         //Damage because different enemeies have different healths
         health -= _damage;
         healthBar.UpdateHealthBar(health, maxHealth);
         //ScaleObject(this.gameObject, transform.localScale * 1.1f);
+
         if (health <= 0)
         {
             Die();
@@ -198,8 +203,8 @@ public class Enemy : GameBehaviour
         {
             PlayAnimation("Hit");
             OnEnemyHit?.Invoke(this.gameObject);
-            //_GM.AddScore(myScore);
 
+            _AM.PlaySound(_AM.GetEnemyHitSound(), audioSource);
         }
         
     }
@@ -219,7 +224,7 @@ public class Enemy : GameBehaviour
         
         //Removes the enemeny from our EnemyManager
         _EM.KillEnemy(this.gameObject);
-        //Destroy(this.gameObject);
+        _AM.PlaySound(_AM.GetEnemyDieSound(), audioSource);
     }
 
     void PlayAnimation(string _animationName)
@@ -227,6 +232,14 @@ public class Enemy : GameBehaviour
         int rnd = UnityEngine.Random.Range(1, 4);
         anim.SetTrigger(_animationName + rnd);
     }
+
+    
+    public void PlayFootstep()
+    {
+        _AM.PlaySound(_AM.GetEnemyFootstepSound(), audioSource, 0.1f);
+      
+    }
+
 
     private void OnCollisionEnter(Collision collision)
     {

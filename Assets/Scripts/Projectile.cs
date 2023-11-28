@@ -5,10 +5,13 @@ using UnityEngine;
 public class Projectile : GameBehaviour
 {
     public int damage = 20;
+
     void Start()
     {
         //Destroy projectile after 5 seconds
         Destroy(this.gameObject, 5);
+        if (GetComponent<AudioSource>() != null)
+            GetComponent<AudioSource>().pitch = Random.Range(0.7f, 1.3f);
     }
 
 
