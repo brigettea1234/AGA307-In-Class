@@ -10,7 +10,7 @@ public class Doors : GameBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player") || other.CompareTag("Enemy")) 
         {
             //Turn off the doors
             door1.SetActive(false);
@@ -21,7 +21,7 @@ public class Doors : GameBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player") || other.CompareTag("Enemy"))
         {
             //Turn on the doors
             door1.SetActive(true);
