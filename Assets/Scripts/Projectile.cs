@@ -28,8 +28,6 @@ public class Projectile : GameBehaviour
             //Destroy this object
             //Destroy(this.gameObject);
         
-        }
-;
-        
+        }    
     }
 }
